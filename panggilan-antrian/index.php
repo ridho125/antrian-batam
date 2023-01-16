@@ -8,6 +8,17 @@
 * E-mail      : indra.setyawantoro@gmail.com
 * WhatsApp    : +62-821-8686-9898
 -->
+<?php 
+include '../config/database.php';
+
+error_reporting(0);
+
+session_start();
+if (!isset($_SESSION['username'])) {
+  header("Location: ../halaman-login/");
+}
+?>
+
 
 <!doctype html>
 <html lang="en" class="h-100">
@@ -58,9 +69,11 @@
         <div class="ms-5 ms-md-0 pt-md-3 pb-md-0">
           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="http://localhost/antrian/"><i class="bi-house-fill text-success"></i></a></li>
+              <li class="breadcrumb-item"><a href="http://localhost/antrian-batam/"><i class="bi-house-fill text-success"></i></a></li>
               <li class="breadcrumb-item" aria-current="page">Dashboard</li>
               <li class="breadcrumb-item" aria-current="page">Antrian</li>
+              <li aria-current="page">&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+              <li class="breadcrumb-item"><a href="logout.php">Logout<i class="person-x text-success"></i></a></li>
             </ol>
           </nav>
         </div>
@@ -140,6 +153,7 @@
               <thead>
                 <tr>
                   <th>Nomor Antrian</th>
+                  <th>Nomor Lambung</th>
                   <th>Status</th>
                   <th>Panggil</th>
                 </tr>
@@ -210,6 +224,11 @@
             "className": 'text-center'
           },
           {
+            "data": "no_lambung",
+            "width": '250px',
+            "className": 'text-center'
+          },
+          {
             "data": "status",
             "visible": false
           },
@@ -264,7 +283,7 @@
 
         // mainkan suara nomor antrian
         setTimeout(function() {
-          responsiveVoice.speak("Penumpang Taksi Konvensional Bandara Hang Nadim Dengan Nomor, " + data["no_antrian"] + ", Silahkan naik ke mobil, pada tempat yang disediakan, terima kasih", "Indonesian Male", {
+          responsiveVoice.speak("Penumpang Taksi Konvensional Bandara Hang Nadim Dengan Nomor Antrian, " + data["no_antrian"] + ", Silahkan naik ke mobil dengan nomor lambung, " + data["no_lambung"] + " ,pada tempat yang telah disediakan, terima kasih", "Indonesian Male", {
             rate: 0.9,
             pitch: 1,
             volume: 1
