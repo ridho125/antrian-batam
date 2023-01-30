@@ -170,18 +170,24 @@ table.table-bordered.dataTable th {
   border-color: #00aa9d;
 }
 
-a {
-  color: black;
+a:link {
+  color: #212529;
+  text-decoration: none;
 }
 
+/* visited link */
 a:visited {
-  color: black;
+  color: #212529;
+  text-decoration: none;
 }
 
+/* mouse over link */
 a:hover {
-  color: brown;
+  color: #00AA9D;
 }
 
+/* selected link */
 a:active {
-  color: brown;
+  color: #212529;
+  text-decoration: underline;
 }

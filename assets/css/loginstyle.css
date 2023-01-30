@@ -118,6 +118,29 @@ body {
     transform: translateY(-5px);
     background: #00a189;
 }
+
+a:link {
+    color: #212529;
+    text-decoration: none;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: #212529;
+    text-decoration: none;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: #00AA9D;
+  }
+  
+  /* selected link */
+  a:active {
+    color: #212529;
+    text-decoration: underline;
+  }
+  
  
 @media (max-width: 430px) {
     .container {

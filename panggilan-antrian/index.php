@@ -156,6 +156,7 @@ if (!isset($_SESSION['username'])) {
                   <th>Nomor Lambung</th>
                   <th>Status</th>
                   <th>Panggil</th>
+                  <!-- <th>Input No. Lambung</th> -->
                 </tr>
               </thead>
             </table>
@@ -226,7 +227,20 @@ if (!isset($_SESSION['username'])) {
           {
             "data": "no_lambung",
             "width": '250px',
-            "className": 'text-center'
+            "className": 'text-center',
+            // "searchable": false,
+            // "orderable": false,
+            "render": function (data, type, row) {
+              if (row["no_lambung"] === "") {
+                var vnlambung = `<input class=" buat_nomor" value="">`;
+              } else if (row["no_lambung"] === null) {
+                var vnlambung = `<input class=" buat_nomor" value="">`;
+              } else {
+                var vnlambung = row["no_lambung"];
+              };
+
+              return vnlambung;
+            }
           },
           {
             "data": "status",
@@ -254,14 +268,27 @@ if (!isset($_SESSION['username'])) {
                 // tampilkan button ulangi panggilan
                 var btn = "<button class=\"btn btn-secondary btn-sm rounded-circle\"><i class=\"bi-mic-fill\"></i></button>";
               };
+
               return btn;
             }
-          },
+          }
         ],
         "order": [
           [0, "desc"]             // urutkan data berdasarkan "no_antrian" secara descending
         ],
         "iDisplayLength": 10,     // tampilkan 10 data per halaman
+      });
+
+      $(".buat_nomor").on('keyup', function(){
+        var nomor = $(this).val();
+        var sdata = table.row($(this).parents('tr')).data();
+        var sid = sdata["id"];
+
+        $.ajax({
+          type: "POST",
+          url: "update_lambung.php",
+          data: { id: sid, nlambung: nomor }
+        });
       });
 
       // panggilan antrian dan update data
@@ -305,7 +332,7 @@ if (!isset($_SESSION['username'])) {
         $('#antrian-selanjutnya').load('get_antrian_selanjutnya.php').fadeIn("slow");
         $('#sisa-antrian').load('get_sisa_antrian.php').fadeIn("slow");
         table.ajax.reload(null, false);
-      }, 1000);
+      }, 10000);
     });
   </script>
 </body>

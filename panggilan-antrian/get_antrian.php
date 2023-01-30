@@ -1,7 +1,7 @@
 <?php
 // pengecekan ajax request untuk mencegah direct access file, agar file tidak bisa diakses secara langsung dari browser
 // jika ada ajax request
-if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+// if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
   // panggil file "database.php" untuk koneksi ke database
   require_once "../config/database.php";
 
@@ -12,6 +12,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
   $query = mysqli_query($mysqli, "SELECT id, no_antrian, no_lambung, status FROM tbl_antrian 
                                   WHERE tanggal='$tanggal'")
                                   or die('Ada kesalahan pada query tampil data : ' . mysqli_error($mysqli));
+                                  // $query = mysqli_query($mysqli, "SELECT id, no_antrian, no_lambung, status, IF(no_lambung IS NULL OR no_lambung = '',0,1) AS status_lambung  FROM tbl_antrian 
+                                  // WHERE tanggal='$tanggal'")
+                                  // or die('Ada kesalahan pada query tampil data : ' . mysqli_error($mysqli));
   // ambil jumlah baris data hasil query
   $rows = mysqli_num_rows($query);
 
@@ -27,6 +30,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
       $data['no_antrian'] = $row["no_antrian"];
       $data['no_lambung'] = $row["no_lambung"];
       $data['status']     = $row["status"];
+      // $data['status_lambung'] = $row["status_lambung"];
 
       array_push($response["data"], $data);
     }
@@ -44,10 +48,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $data['no_antrian'] = "-";
     $data['no_lambung'] = "-";
     $data['status']     = "";
+    // $data['status_lambung'] = "";
 
     array_push($response["data"], $data);
 
     // tampilkan data
     echo json_encode($response);
   }
-}
+// }
