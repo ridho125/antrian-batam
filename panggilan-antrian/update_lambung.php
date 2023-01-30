@@ -8,7 +8,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
   // mengecek data post dari ajax
   if (isset($_POST['nlambung'])) {
     // ambil data hasil post dari ajax
-    $id = mysqli_real_escape_string($mysqli, $_POST['sid']);
+    $id = mysqli_real_escape_string($mysqli, $_POST['id']);
     $nlambung = mysqli_real_escape_string($mysqli, $_POST['nlambung']);
     
     // tentukan nilai status

@@ -232,11 +232,11 @@ if (!isset($_SESSION['username'])) {
             // "orderable": false,
             "render": function (data, type, row) {
               if (row["no_lambung"] === "") {
-                var vnlambung = `<input class=" buat_nomor" value="">`;
+                var vnlambung = `<input class="buat_nomor" value="">`;
               } else if (row["no_lambung"] === null) {
-                var vnlambung = `<input class=" buat_nomor" value="">`;
+                var vnlambung = `<input class="buat_nomor" value="">`;
               } else {
-                var vnlambung = row["no_lambung"];
+                var vnlambung = `<input class="buat_nomor" value="`+row["no_lambung"]+`">` ;
               };
 
               return vnlambung;
@@ -279,18 +279,6 @@ if (!isset($_SESSION['username'])) {
         "iDisplayLength": 10,     // tampilkan 10 data per halaman
       });
 
-      $(".buat_nomor").on('keyup', function(){
-        var nomor = $(this).val();
-        var sdata = table.row($(this).parents('tr')).data();
-        var sid = sdata["id"];
-
-        $.ajax({
-          type: "POST",
-          url: "update_lambung.php",
-          data: { id: sid, nlambung: nomor }
-        });
-      });
-
       // panggilan antrian dan update data
       $('#tabel-antrian tbody').on('click', 'button', function() {
         // ambil data dari datatables 
@@ -322,6 +310,19 @@ if (!isset($_SESSION['username'])) {
           type: "POST",               // mengirim data dengan method POST
           url: "update.php",          // url file proses update data
           data: { id: id }            // tentukan data yang dikirim
+        });
+      });
+
+      $("#tabel-antrian tbody").on('keyup', 'input', function(){
+        console.log($(this).val());
+        var nomor = $(this).val();
+        var sdata = table.row($(this).parents('tr')).data();
+        var sid = sdata["id"];
+
+        $.ajax({
+          type: "POST",
+          url: "update_lambung.php",
+          data: { id: sid, nlambung: nomor }
         });
       });
 
